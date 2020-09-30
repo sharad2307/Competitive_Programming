@@ -1,0 +1,62 @@
+void build(long node, long start, long end, long a[], long tree[]){
+    
+    if(start==end){   //leaf node
+        tree[node]=a[start];
+        //dpth=log2(node+1);
+    }
+    else{
+        long mid=(start+end)/2;
+        build(2*node+1,start,mid,a,tree);
+        build(2*node+2,mid+1,end,a,tree);
+        /*if((((long)log2(node+1))%2)!=(dpth%2))
+        tree[node]=tree[2*node+1] | tree[2*node+2];
+        else
+        tree[node]=tree[2*node+1] ^ tree[2*node+2];*/
+    }
+    
+}
+
+void update(long node, long start, long end, long tree[], long i, long val){
+    
+    if(start==end){
+        //a[i]=val;
+        tree[node]=val;
+    }
+    else{
+        long mid=(start+end)/2;
+        if(start<=i and i<=mid){
+            update(2*node+1,start,mid,tree,i,val);
+        }
+        else{
+            update(2*node+2,mid+1,end,tree,i,val);
+        }
+        /*if((((long)log2(node+1))%2)!=(dpth%2))
+        tree[node]=tree[2*node+1] | tree[2*node+2];
+        else
+        tree[node]=tree[2*node+1] ^ tree[2*node+2];*/
+    }
+    
+}
+
+ll query(ll node, ll start, ll end, ll l, ll r, vector<ll> &s)
+{
+    if(r < start or end < l)
+    {
+        // range represented by a node is completely outside the given range
+        return 0;
+    }
+    if(l <= start and end <= r)
+    {
+        // range represented by a node is completely inside the given range
+        for(ll i=0;i<26;i++)
+        if(tree[node][i]) s[i]=1;
+        return 0;
+    }
+    // range represented by a node is partially inside and partially outside the given range
+    int mid = (start + end) / 2;
+    query(2*node+1, start, mid, l, r, s);
+    query(2*node+2, mid+1, end, l, r, s);
+    return 0;
+}
+
+// Change arguments & operations as per the question
