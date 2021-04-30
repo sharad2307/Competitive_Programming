@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> powerfulIntegers(int x, int y, int bound) {
+      set<int> s;
+        for (int l = 1; l + 1 <= bound; l *= x) {
+            for (int r = 1; l + r <= bound; r *= y) {
+                s.insert(l + r);
+                if (y == 1)
+                    break;
+            }
+            if (x == 1)
+                break;
+        }
+        
+        vector<int> v;
+        
+        for(auto i:s)v.push_back(i);
+        // return {uset.begin(), uset.end()};
+        
+        return v;
+    }
+};
