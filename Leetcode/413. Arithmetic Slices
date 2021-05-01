@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        if(nums.size()<3)
+          return 0;
+      int n=nums.size();
+      vector<int>temp(n-1);
+      for(int i=0;i<n-1;i++)
+          temp[i]=nums[i+1]-nums[i];
+      int subarray=0,cnt=1;
+      for(int i=0;i<temp.size()-1;i++)
+      {
+          if(temp[i]==temp[i+1])
+              cnt++;
+          else
+          {
+              subarray+=(cnt*(cnt-1))/2;
+              cnt=1;
+          }
+      }
+      subarray+=(cnt*(cnt-1))/2;
+      return subarray;
+    }
+};
