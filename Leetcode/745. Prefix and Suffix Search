@@ -1,0 +1,29 @@
+class WordFilter {
+private: 
+    unordered_map<string, int> mp;
+    
+public:
+    WordFilter(vector<string>& words) {
+        
+        for(int i=0; i<words.size(); i++)
+        {
+            string word = words[i];
+            
+            for(int j=0; j<=word.size(); j++)
+            {
+                string prefix = word.substr(0,j);
+                for(int k=0; k<word.size(); k++)
+                {
+                    string suffix = word.substr(k);
+                    mp[prefix + "#" + suffix] = i;
+                }
+            }
+        }     
+    }
+    
+    int f(string prefix, string suffix) {
+        if(mp.find(prefix + "#" + suffix) != mp.end())
+            return mp[prefix + "#" + suffix];
+        return -1;
+    }
+};
