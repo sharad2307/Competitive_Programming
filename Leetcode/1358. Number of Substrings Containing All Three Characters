@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        
+        //we will iterate through every element and store index of a, b, and c
+        //no of substrings containing at least one occurence of a, b and c
+        //will be equal to the minimum index (1-based indexing) among these three
+        
+        int n = s.length();
+        
+        //a, b & c contains index of latest occurence of a, b & c respectively
+        int ans = 0, a = -1, b = -1, c = -1;
+        
+        for(int i = 0; i < n; i++) {
+            
+            //update indices
+            if(s[i] == 'a') a = i;
+            if(s[i] == 'b') b = i;
+            if(s[i] == 'c') c = i;
+            
+            //update ans
+            if(a != -1 && b != -1 && c != -1) {
+                ans += min(a, min(b, c)) + 1;
+            }
+            
+        }
+        
+        return ans;
+        
+    }
+};
