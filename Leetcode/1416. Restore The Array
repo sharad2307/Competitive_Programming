@@ -1,0 +1,34 @@
+class Solution {
+    typedef long long ll;
+public:
+    int numberOfArrays(string s, int k) {
+        int big = 1e9 + 7;
+        
+        int n = s.size();
+        vector<int> dp(n+1, 0);
+        dp[0] = 1;
+        
+		// Get the length of k.
+        int len = 0, cur = k;
+        while(cur){
+            len++;
+            cur = cur / 10;
+        }
+        
+        for(int i=1; i<=n; i++) {
+			// for every index i, we need to examine at most previous length(k) indexes.
+			// If the substring which ends at index i, and has length less than length(k) and is valid (no leading zeros, <= k)
+            for(int l = 1; l <= min(i, len); ++l) {
+                if(s[i - l] == '0') continue;
+                string sub = s.substr(i - l, l);
+                ll x = stoi(sub);
+                if(x <=  k) {
+                    dp[i] += dp[i - l];
+                }
+            }
+            dp[i] = dp[i] % big;
+        }
+                
+        return dp[n];
+    }
+};
