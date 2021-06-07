@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        vector<int> dp(cost.size(),-1);
+        
+        return min(ways(0,cost,dp),ways(1,cost,dp));
+        
+    }
+    
+    int ways(int i,vector<int> cost,vector<int> & dp)
+    {
+        if(i>=cost.size())return 0;
+        
+        if(dp[i]!=-1)return dp[i];
+        
+        int op1=ways(i+1,cost,dp);
+        int op2=ways(i+2,cost,dp);
+        
+        return dp[i]=min(op1,op2)+cost[i];
+    }
+};
