@@ -1,0 +1,35 @@
+class Solution {
+public:
+    
+    vector<vector<int>> dir = {{2, -1}, {2, 1}, {-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}};
+    
+    double dfs(int N, int K, int r, int c, unordered_map<string, double>& memo) {
+        if (K == 0) {
+            return 1.0;
+        }
+        
+        string key = to_string(r) + ":" + to_string(c) + ":" + to_string(K);
+        if (memo.find(key) != memo.end()) {
+            return memo[key];
+        }
+        
+        double prob = 0.0;
+        for (int i = 0; i < dir.size(); i++) {
+            int x1 = r + dir[i][0], y1 = c + dir[i][1];
+            
+            if (x1 >= 0 && x1 < N && y1 >= 0 && y1 < N) {
+                prob += (1.0 / 8.0) * dfs(N, K-1, x1, y1, memo);
+            }
+        }
+        
+        memo[key] = prob;
+        return prob;
+    }
+    
+    double knightProbability(int N, int K, int r, int c) {
+        double prob = 1;
+        unordered_map<string, double> memo;
+        prob = dfs(N, K, r, c, memo);
+        return prob;
+    }
+};
